@@ -13,6 +13,6 @@ Usage:
 
 copy_subject.sh \
 	--source_project <source_project> \
-	--dest_project <detination_project> \
+	--dest_project <destination_project> \
 	--subjects 123456,234567,345678 \
 	--scan_types "T1,DTI_HARDI" 
