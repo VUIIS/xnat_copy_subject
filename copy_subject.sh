@@ -1,6 +1,8 @@
 #!/bin/bash
 #
 # Copy certain DICOMs of a subject from one project to another on XNAT
+#
+# A DAX installation is required, and its python venv must be active.
 
 
 # Parse options
@@ -21,6 +23,18 @@ do
 	esac
 done
 
+# Where are our scripts? We need to find the python code
+function realpath() {
+    if ! pushd $1 &> /dev/null; then 
+        pushd ${1##*/} &> /dev/null
+        echo $( pwd -P )/${1%/*}
+    else
+        pwd -P
+    fi
+    popd > /dev/null
+}
+script_dir=$(realpath $(dirname "${0}"))
+
 # Make temporary directory
 tmp_dir=$(mktemp -d -t copy_subject) || exit 1
 
@@ -39,3 +53,11 @@ Xnatupload --csv "${tmp_dir}"/upload.csv
 if [ -d "${tmp_dir}" ] ; then
 	rm -fr "${tmp_dir}"
 fi
+
+# Set subject and session variables
+subjlist=$(echo ${subjects} | tr ',' ' ')
+for subj in ${subjlist} ; do
+	echo "Copying subject and session vars for ${subj}"
+	"${script_dir}"/set_vars.py "${source_project}" "${dest_project}" "${subj}"
+done
+
