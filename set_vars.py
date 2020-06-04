@@ -19,13 +19,14 @@ dest_subject = xnat.select(
 dob = source_subject.attrs.get('xnat:demographicData/dob')
 gender = source_subject.attrs.get('xnat:demographicData/gender')
 handedness = source_subject.attrs.get('xnat:demographicData/handedness')
+race = source_subject.attrs.get('xnat:demographicData/race')
 sid = source_subject.attrs.get("xnat:subjectData/fields/field[name='id']/field")
 
-dest_subject.attrs.set('xnat:demographicData/dob',dob)
-dest_subject.attrs.set('xnat:demographicData/gender',gender)
-dest_subject.attrs.set('xnat:demographicData/handedness',handedness)
-dest_subject.attrs.set("xnat:subjectData/fields/field[name='id']/field",sid)
-
+dest_subject.attrs.set('xnat:subjectData/demographics[@xsi:type=xnat:demographicData]/dob', dob)
+dest_subject.attrs.set('xnat:subjectData/demographics[@xsi:type=xnat:demographicData]/gender', gender)
+dest_subject.attrs.set('xnat:subjectData/demographics[@xsi:type=xnat:demographicData]/handedness', handedness)
+dest_subject.attrs.set('xnat:subjectData/demographics[@xsi:type=xnat:demographicData]/race', race)
+dest_subject.attrs.set("xnat:subjectData/fields/field[name='id']/field", sid)
 
 # Session variables
 source_session = xnat.select( 
@@ -34,7 +35,9 @@ dest_session = xnat.select(
     '/projects/{0}/subjects/{1}/experiments/{1}'.format(dest_project,subject) )
 
 sdate = source_session.attrs.get('xnat:mrSessionData/date')
+stime = source_session.attrs.get('xnat:mrSessionData/time')
 dest_session.attrs.set('xnat:mrSessionData/date',sdate)
+dest_session.attrs.set('xnat:mrSessionData/time',stime)
 
 
 # Clean up

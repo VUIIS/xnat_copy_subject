@@ -35,6 +35,7 @@ function realpath() {
 }
 script_dir=$(realpath $(dirname "${0}"))
 
+
 # Make temporary directory
 tmp_dir=$(mktemp -d -t copy_subject) || exit 1
 
@@ -53,6 +54,7 @@ Xnatupload --csv "${tmp_dir}"/upload.csv
 if [ -d "${tmp_dir}" ] ; then
 	rm -fr "${tmp_dir}"
 fi
+
 
 # Set subject and session variables
 subjlist=$(echo ${subjects} | tr ',' ' ')
