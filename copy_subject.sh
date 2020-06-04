@@ -58,6 +58,6 @@ fi
 subjlist=$(echo ${subjects} | tr ',' ' ')
 for subj in ${subjlist} ; do
 	echo "Copying subject and session vars for ${subj}"
-	"${script_dir}"/set_vars.py "${source_project}" "${dest_project}" "${subj}"
+	python "${script_dir}"/set_vars.py "${source_project}" "${dest_project}" "${subj}"
 done
 
