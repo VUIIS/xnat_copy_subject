@@ -23,6 +23,23 @@ do
 	esac
 done
 
+# Check for params
+if [ -z "${source_project}" ] \
+	|| [ -z "${dest_project}" ] \
+	|| [ -z "${subjects}" ] \
+	|| [ -z "${scan_types}" ] ; then
+	cat << HERE
+Usage example:
+    ${0} \\
+      --source_project SOURCE_PROJ \\
+      --dest_project DESTINATION_PROJ \\
+      --subjects 123456,234567,345678 \\
+      --scan_types "T1,Rest"
+HERE
+	exit 0
+fi
+	
+
 # Where are our scripts? We need to find the python code
 function realpath() {
     if ! pushd $1 &> /dev/null; then 
