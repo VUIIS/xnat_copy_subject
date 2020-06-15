@@ -16,6 +16,10 @@ source_subject = xnat.select(
 dest_subject = xnat.select( 
     '/projects/{0}/subjects/{1}'.format(dest_project,subject) )
 
+if dest_subject.exists():
+    xnat.disconnect()
+    raise Exception('Destination subject exists')
+
 dob = source_subject.attrs.get('xnat:demographicData/dob')
 gender = source_subject.attrs.get('xnat:demographicData/gender')
 handedness = source_subject.attrs.get('xnat:demographicData/handedness')
