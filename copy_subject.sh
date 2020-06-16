@@ -66,7 +66,7 @@ done
 tmp_dir=$(mktemp -d -t copy_subject) || exit 1
 
 # Download
-Xnatdownload -p "${source_project}" -d "${tmp_dir}" --subj "${subjects}" -s ${scan_types} --rs DICOM
+Xnatdownload -p "${source_project}" -d "${tmp_dir}" --subj "${subjects}" -s "${scan_types}" --rs DICOM
 
 # Replace project name in download report CSV
 cat "${tmp_dir}"/download_report.csv | \
