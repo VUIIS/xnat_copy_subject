@@ -53,6 +53,15 @@ function realpath() {
 script_dir=$(realpath $(dirname "${0}"))
 
 
+# Check for subjects already present in dest project
+echo "Checking subject list ${subjects}"
+subjlist=$(echo ${subjects} | tr ',' ' ')
+for subj in ${subjlist} ; do
+	python "${script_dir}"/check_for_subject.py "${dest_project}" "${subj}" \
+	|| exit 1
+done
+
+
 # Make temporary directory
 tmp_dir=$(mktemp -d -t copy_subject) || exit 1
 
