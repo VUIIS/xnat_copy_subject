@@ -63,7 +63,7 @@ done
 
 
 # Make temporary directory
-tmp_dir=$(mktemp -d -t copy_subject) || exit 1
+tmp_dir=$(mktemp -d copy_subject.XXXXXX) || exit 1
 
 # Download
 Xnatdownload -p "${source_project}" -d "${tmp_dir}" --subj "${subjects}" -s "${scan_types}" --rs DICOM
