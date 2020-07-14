@@ -20,7 +20,8 @@ dob = source_subject.attrs.get('xnat:demographicData/dob')
 gender = source_subject.attrs.get('xnat:demographicData/gender')
 handedness = source_subject.attrs.get('xnat:demographicData/handedness')
 race = source_subject.attrs.get('xnat:demographicData/race')
-sid = source_subject.attrs.get("xnat:subjectData/fields/field[name='id']/field")
+#sid = source_subject.attrs.get("xnat:subjectData/fields/field[name='id']/field")
+sid = source_subject.xpath("/xnat:Subject/xnat:fields/xnat:field[@name='id']/text()[2]")[0]
 
 dest_subject.attrs.set('xnat:subjectData/demographics[@xsi:type=xnat:demographicData]/dob', dob)
 dest_subject.attrs.set('xnat:subjectData/demographics[@xsi:type=xnat:demographicData]/gender', gender)
