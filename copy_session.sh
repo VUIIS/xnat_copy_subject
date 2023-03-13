@@ -74,10 +74,10 @@ cat "${tmp_dir}"/download_report.csv | \
 
 # Upload. Note, if target resource already exists, Xnatupload prints a warning and does
 # not do the upload.
-Xnatupload --csv "${tmp_dir}"/upload.csv
+Xnatupload --csv "${tmp_dir}"/upload.csv --noextract
 
 # Clean up
-if [ -d "${tmp_dir}" ] ; then
+if [ -d "${tmp_dir}" -a -n "${tmp_dir}" ] ; then
 	rm -fr "${tmp_dir}"
 fi
 
@@ -85,7 +85,7 @@ fi
 # Set session dates
 sesslist=$(echo ${sessions} | tr ',' ' ')
 for sess in ${sesslist} ; do
-	echo "Copying session dates for ${subj}"
+	echo "Copying session dates for ${sess}"
 		python "${script_dir}"/set_sess_vars.py "${source_project}" "${dest_project}" "${sess}"
 done
 
