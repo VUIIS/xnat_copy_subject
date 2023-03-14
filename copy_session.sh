@@ -74,7 +74,7 @@ cat "${tmp_dir}"/download_report.csv | \
 
 # Upload. Note, if target resource already exists, Xnatupload prints a warning and does
 # not do the upload.
-Xnatupload --csv "${tmp_dir}"/upload.csv --noextract
+Xnatupload --csv "${tmp_dir}"/upload.csv
 
 # Clean up
 if [ -d "${tmp_dir}" -a -n "${tmp_dir}" ] ; then
