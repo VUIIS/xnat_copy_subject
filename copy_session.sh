@@ -17,6 +17,8 @@ do
 			sessions="${2}"; shift; shift ;;
 		--scan_types)
 			scan_types="${2}"; shift; shift ;;
+		--resources)
+			resources="${2}"; shift; shift ;;
 		*)
 			echo Unknown input "${1}"; shift ;;
 	esac
@@ -25,7 +27,8 @@ done
 # Check for params
 if [ -z "${source_project}" ] \
 	|| [ -z "${dest_project}" ] \
-	|| [ -z "${sessions}" ] \
+    || [ -z "${sessions}" ] \
+    || [ -z "${resources}" ] \
 	|| [ -z "${scan_types}" ] ; then
 	cat << HERE
 Usage example:
@@ -33,7 +36,8 @@ Usage example:
       --source_project SOURCE_PROJ \\
       --dest_project DESTINATION_PROJ \\
       --sessions 123456,234567,345678 \\
-      --scan_types "T1,Rest"
+      --resources NIFTI,JSON \\
+      --scan_types T1,Rest
 HERE
 	exit 0
 fi
@@ -65,7 +69,8 @@ done
 tmp_dir=$(mktemp -d copy_session.XXXXXX) || exit 1
 
 # Download
-Xnatdownload -p "${source_project}" -d "${tmp_dir}" --sess "${sessions}" -s "${scan_types}" --rs DICOM
+Xnatdownload -p "${source_project}" -d "${tmp_dir}" \
+    --sess "${sessions}" -s "${scan_types}" --rs "${resources}"
 
 # Replace project name in download report CSV
 cat "${tmp_dir}"/download_report.csv | \
